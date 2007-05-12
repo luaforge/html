@@ -1,0 +1,70 @@
+Lua HTML Parser
+
+
+* What is this
+
+Lua HTML parser is an HTML parser written only in Lua.
+It processes HTML input and produces a table which represents an HTML tree.
+
+For example, if the following input is given:
+
+<html><body>
+<p>
+  Click <a href="http://example.com/">here!</a>
+<p>
+  Hello
+</p>
+</body></html>
+
+Then, the parser produces the following table:
+
+{
+  _tag = "#document",
+  _attr = {},
+  {
+    _tag = "html",
+    _attr = {},
+    {
+      _tag = "body",
+      _attr = {},
+      "\n",
+      {
+        _tag = "p",
+        _attr = {},
+        "\n  Click ",
+        {
+          _tag = "a",
+          _attr = {href = "http://example.com/"}
+          "here!",
+        },
+        "\n",
+      },
+      {
+        _tag = "p",
+        _attr = {},
+        "\n  Hello\n",
+      },
+      "\n",
+    }
+  }
+}
+
+
+* Usage
+
+Parsing file:
+
+require "html"
+html.parse(io.stdin)
+
+Parsing string:
+
+require "html"
+html.parsestr("<html></html>")
+
+
+* Author
+
+T. Kobayashi
+ether @nospam@ users.sourceforge.jp 
+
