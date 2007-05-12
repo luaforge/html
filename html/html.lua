@@ -1,3 +1,5 @@
+-- $Id: html.lua,v 1.2 2007-05-12 04:37:20 tclua Exp $
+
 module(..., package.seeall)
 
 entity = {
@@ -404,3 +406,16 @@ function parse(f)
   return root
 end
 
+function parsestr(s)
+  local handle = {
+    _content = s,
+    _pos = 1,
+    read = function (self, length)
+      if self._pos > string.len(self._content) then return end
+      local ret = string.sub(self._content, self._pos, self._pos + length - 1)
+      self._pos = self._pos + length
+      return ret
+    end
+  }
+  return parse(handle)
+end
